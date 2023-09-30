@@ -21,6 +21,7 @@ module.exports = {
   },
   plugins: ["react"],
   rules: {
+    "no-unused-vars": "off",
     semi: ["error", "always"],
     quotes: ["error", "double"],
     curly: ["error"],

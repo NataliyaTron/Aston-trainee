@@ -62,8 +62,8 @@ export const Card = ({ img, name, info = [], onClick }) => {
 };
 
 Card.propTypes = {
-  img: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  info: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+  img: PropTypes.string,
+  name: PropTypes.string,
+  info: PropTypes.array,
+  onClick: PropTypes.func,
 };

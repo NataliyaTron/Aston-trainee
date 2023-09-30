@@ -1,9 +1,14 @@
+import React from "react";
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { IoMoon, IoMoonOutline } from "react-icons/io5";
 import { Container } from "./Container";
+import { setTheme } from "../store/theme/theme-actions";
+import { clearControls } from "../store/controls/controls-actions";
 
-const HeaderElement = styled.header`
+const HeaderEl = styled.header`
   box-shadow: var(--shadow);
   background-color: var(--colors-ui-base);
 `;
@@ -15,8 +20,8 @@ const Wrapper = styled.div`
   padding: 2rem 0;
 `;
 
-const Title = styled.a.attrs({
-  href: "/",
+const Title = styled(Link).attrs({
+  to: "/",
 })`
   color: var(--colors-text);
   font-size: var(--fs-sm);
@@ -28,24 +33,27 @@ const ModeSwitcher = styled.div`
   color: var(--colors-text);
   font-size: var(--fs-sm);
   cursor: pointer;
-  //font-weight: var(--fw-bold);
   text-transform: capitalize;
 `;
 
 export const Header = () => {
-  const [theme, setTheme] = useState("light");
+  const dispatch = useDispatch();
+  const theme = useSelector((state) => state.theme);
 
-  const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
+  const toggleTheme = () =>
+    dispatch(setTheme(theme === "light" ? "dark" : "light"));
+
+  const cleanUp = () => dispatch(clearControls());
 
   useEffect(() => {
     document.body.setAttribute("data-theme", theme);
   }, [theme]);
 
   return (
-    <HeaderElement>
+    <HeaderEl>
       <Container>
         <Wrapper>
-          <Title>REST COUNTRIES</Title>
+          <Title onClick={cleanUp}>Where is the world?</Title>
           <ModeSwitcher onClick={toggleTheme}>
             {theme === "light" ? (
               <IoMoonOutline size="14px" />
@@ -56,6 +64,6 @@ export const Header = () => {
           </ModeSwitcher>
         </Wrapper>
       </Container>
-    </HeaderElement>
+    </HeaderEl>
   );
 };

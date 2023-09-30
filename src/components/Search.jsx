@@ -1,5 +1,10 @@
+import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
 import { IoSearch } from "react-icons/io5";
+import { selectSearch } from "../store/controls/controls-selectors";
+import { setSearch } from "../store/controls/controls-actions";
 
 const InputContainer = styled.label`
   background-color: var(--colors-ui-base);
@@ -29,9 +34,12 @@ const Input = styled.input.attrs({
   background-color: var(--colors-ui-base);
 `;
 
-export const Search = ({ search, onSearch }) => {
+export const Search = () => {
+  const dispatch = useDispatch();
+  const search = useSelector(selectSearch);
+
   const handleSearch = (e) => {
-    onSearch(e.target.value);
+    dispatch(setSearch(e.target.value));
   };
 
   return (
@@ -40,4 +48,9 @@ export const Search = ({ search, onSearch }) => {
       <Input onChange={handleSearch} value={search} />
     </InputContainer>
   );
+};
+
+Search.propTypes = {
+  search: PropTypes.string.isRequired,
+  onSearch: PropTypes.func.isRequired,
 };
